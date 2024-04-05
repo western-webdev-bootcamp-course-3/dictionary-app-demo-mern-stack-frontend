@@ -36,7 +36,7 @@ const WordSearch = () => {
   }, []);
 
   return (
-    <div style={{ marginLeft: '4rem', marginRight: '4rem' }}>
+    <div>
       <InputArea searchServer={searchServer} initialWord={word} />
       <DefinitionArea data={definition} searching={searching} />
     </div>

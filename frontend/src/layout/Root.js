@@ -1,150 +1,70 @@
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import { color } from 'constant/Color';
-
-const navList = [
-  {
-    name: 'Home',
-    path: '/',
-  },
-  {
-    name: 'Word list',
-    path: '/word-list',
-  },
-];
+import Sidebar from './Sidebar';
+import SidebarHover from './SidebarHover';
+import CollaseButton from './CollaseButton';
 
 const Root = () => {
-  const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
-      <Sidebar>
-        <Header>
-          <h1>My dictionary</h1>
-        </Header>
-        <Navigation>
-          <ul>
-            {navList.map((navItem, index) => {
-              return (
-                <li key={index}>
-                  <NavLink
-                    to={navItem.path}
-                    className={() =>
-                      location.pathname === navItem.path ? 'active' : ''
-                    }
-                  >
-                    {navItem.name}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-        </Navigation>
-      </Sidebar>
-      <Detail>
+      <SidebarWrapper>
+        <Sidebar />
+      </SidebarWrapper>
+      <SidebarHoverWrapper style={isCollapsed ? {} : {display: 'block'}}>
+        <SidebarHover setIsCollapsed={setIsCollapsed} />
+      </SidebarHoverWrapper>
+      <CollaseWrapper>
+        <CollaseButton setIsCollapsed={setIsCollapsed} />
+      </CollaseWrapper>
+      <PageWrapper>
         <Outlet />
-      </Detail>
+      </PageWrapper>
     </div>
   );
 };
 
 // Create a styled div element
-const Sidebar = styled.div`
-  width: 22rem;
-  background-color: ${color.secondaryBackground};
-  border-right: solid 1px ${color.tertiaryText};
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-`;
+const SidebarWrapper = styled.div`
+  width: 20rem;
 
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid ${color.tertiaryText};
-
-  h1 {
-    font-size: 1rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    order: 1;
-    line-height: 1;
-  }
-
-  h1::before {
-    content: url('images/logo.svg');
-    margin-right: 0.5rem;
-    position: relative;
-    top: 1px;
+  // Use media query to hide sidebar on screens smaller than 992px
+  @media (max-width: 992px) {
+    display: none;
   }
 `;
 
-const Navigation = styled.nav`
-  flex: 1;
-  overflow: auto;
-  padding-top: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+const SidebarHoverWrapper = styled.div`
+  display: none;
+  position: fixed;
+  z-index: 1;
+  width: 20rem;
+`;
 
-  a span {
-    float: right;
-    color: ${color.primaryText};
-  }
+const CollaseWrapper = styled.div`
+  display: none;
 
-  a.active span {
-    color: inherit;
-  }
-
-  .active i {
-    color: inherit;
-  }
-
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-
-    white-space: pre;
-    padding: 0.5rem;
-    border-radius: 8px;
-    color: inherit;
-    text-decoration: none;
-    gap: 1rem;
-  }
-
-  a:hover {
-    background: ${color.primaryBackground};
-  }
-
-  a.active {
-    background: ${color.accent};
-    color: white;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  li {
-    margin: 1rem 0;
+  @media (max-width: 992px) {
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    padding-top: 2rem;
   }
 `;
 
-const Detail = styled.div`
+const PageWrapper = styled.div`
   flex: 1;
   padding: 4rem;
   max-height: 100vh;
   overflow-y: auto;
-  width: calc(100vw - 22rem);
+  width: calc(100vw - 20rem);
+
+  @media (max-width: 1200px) {
+    width: calc(100vw - 2rem);
+    padding: 2rem 0.5rem 2rem 0.5rem;
+  }
 `;
 
 export default Root;
