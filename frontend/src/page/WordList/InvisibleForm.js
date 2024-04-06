@@ -1,5 +1,5 @@
 import { BodyMedium } from 'component/Text';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { color } from 'constant/Color';
 import { useWord } from 'hook/useWord';
 
@@ -9,6 +9,8 @@ const InvisibleForm = ({ word, ...rest }) => {
 
   // State to hold the current value
   const [value, setValue] = useState(word);
+
+  console.log('word is ' + word + '; value is ' + value);
 
   // State to control whether the input is shown or the text
   const [isEditing, setIsEditing] = useState(false);
@@ -29,6 +31,11 @@ const InvisibleForm = ({ word, ...rest }) => {
     updateWord(word, value); // Update the word in the list
     setIsEditing(false);
   };
+
+  // make sure value is updated when word changes
+  useEffect(() => {
+    setValue(word);
+  }, [word]);
 
   return (
     <div {...rest}>
@@ -54,7 +61,7 @@ const InvisibleForm = ({ word, ...rest }) => {
           />
         </form>
       ) : (
-        <BodyMedium onDoubleClick={handleDoubleClick}>{value}</BodyMedium>
+        <BodyMedium onDoubleClick={handleDoubleClick}>{word}</BodyMedium>
       )}
     </div>
   );

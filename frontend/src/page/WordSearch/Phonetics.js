@@ -1,32 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useWord } from 'hook/useWord';
 import { color } from 'constant/Color';
 import { HeadingLarge, HeadingMedium } from 'component/Text';
 
 const Phonetics = ({ data }) => {
-  const [loading, setLoading] = useState(false);
-  const { words, addWord, removeWord } = useWord();
-
-  if (!data) return null;
+  const [loading, setLoading] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
+  const { isWordSaved, addWord, removeWord } = useWord();
 
   // handle save a word
-  const handleSave = () => {
-    setLoading(true);
-    addWord(data.word);
-    setTimeout(() => {
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      await addWord(data.word);
       setLoading(false);
-    }, 1000);
+      setIsSaved(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // handle remove a word from the save list
-  const handleRemove = () => {
-    setLoading(true);
-    removeWord(data.word);
-    setTimeout(() => {
+  const handleRemove = async () => {
+    try {
+      setLoading(true);
+      await removeWord(data.word);
       setLoading(false);
-    }, 1000);
+      setIsSaved(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    // check if the word is saved
+    const handleIsSaved = async () => {
+      try {
+        const response = await isWordSaved(data.word);
+        return response;
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          return false;
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    handleIsSaved().then((result) => {
+      // update the saved state
+      setIsSaved(result);
+      // update the loading state
+      setLoading(false);
+    });
+  }, [data]);
+
+  // console.log(isSaved);
+
+  if (!data) return null;
 
   return (
     <div
@@ -44,7 +76,7 @@ const Phonetics = ({ data }) => {
         </HeadingMedium>
       </div>
       <div>
-        {!words.includes(data.word) ? (
+        {!isSaved ? (
           <button
             style={{ background: 'none', border: 'none', cursor: 'pointer' }}
             onClick={handleSave}

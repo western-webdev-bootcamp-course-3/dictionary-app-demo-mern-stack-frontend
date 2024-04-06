@@ -63,6 +63,7 @@ const Header = styled.div`
 
   h1 {
     font-size: 1rem;
+    padding: 1rem 0;
     font-weight: 500;
     display: flex;
     align-items: center;

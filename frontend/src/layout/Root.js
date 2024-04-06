@@ -63,7 +63,7 @@ const PageWrapper = styled.div`
 
   @media (max-width: 1200px) {
     width: calc(100vw - 2rem);
-    padding: 2rem 0.5rem 2rem 0.5rem;
+    padding: 2rem 1rem 2rem 1rem;
   }
 `;
 

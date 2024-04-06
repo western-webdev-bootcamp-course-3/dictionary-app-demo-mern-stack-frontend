@@ -26,7 +26,7 @@ connection.once('open', () => {
 });
 
 // Routes
-app.use('/api', wordRoutes);
+app.use('/words', wordRoutes);
 
 // start server
 app.listen(port, () => {

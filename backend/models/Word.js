@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const wordSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   word: String,
 });
 
