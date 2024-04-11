@@ -37,7 +37,12 @@ const WordSearch = () => {
 
   return (
     <div>
-      <InputArea searchServer={searchServer} initialWord={word} />
+      <InputArea
+        searchServer={searchServer}
+        initialWord={word}
+        data={definition}
+        searching={searching}
+      />
       <DefinitionArea data={definition} searching={searching} />
     </div>
   );

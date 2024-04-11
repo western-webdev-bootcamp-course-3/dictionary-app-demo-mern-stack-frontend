@@ -1,6 +1,6 @@
 import { CiMenuBurger } from 'react-icons/ci';
 
-const CollaseButton = ({ setIsCollapsed }) => {
+const CollapseButton = ({ setIsCollapsed }) => {
   return (
     <button
       style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
@@ -11,4 +11,4 @@ const CollaseButton = ({ setIsCollapsed }) => {
   );
 };
 
-export default CollaseButton;
+export default CollapseButton;

@@ -3,7 +3,7 @@ import { IoIosSearch } from 'react-icons/io';
 import styled from 'styled-components';
 import { color } from 'constant/Color';
 
-const InputArea = ({ searchServer, initialWord }) => {
+const InputArea = ({ searchServer, initialWord, data, searching }) => {
   const [text, setText] = useState(initialWord);
 
   const handleChange = (e) => {
@@ -19,30 +19,31 @@ const InputArea = ({ searchServer, initialWord }) => {
   };
 
   return (
-      <InputForm onSubmit={handleSubmit}>
-        <Input
-          type='text'
-          value={text}
-          onChange={handleChange}
-          placeholder='Search for any word...'
-        />
-        <Button type='submit' disabled={text.trim() === ''}>
-          <IoIosSearch size={20} color='rgb(164, 69, 237)' />
-        </Button>
-      </InputForm>
+    <InputForm onSubmit={handleSubmit} data={data} searching={searching}>
+      <Input
+        type='text'
+        value={text}
+        onChange={handleChange}
+        placeholder='Search for any word...'
+      />
+      <Button type='submit' disabled={text.trim() === ''}>
+        <IoIosSearch size={20} color='rgb(164, 69, 237)' />
+      </Button>
+    </InputForm>
   );
 };
 
 const InputForm = styled.form`
   display: flex;
-  background-color: ${color.secondaryBackground}; 
+  background-color: ${color.secondaryBackground};
   padding: 1rem;
   gap: 1rem;
   border-radius: 8px;
   justify-content: space-between;
 
   &:focus-within {
-    box-shadow: 0 0 0 2px ${color.accent};
+    box-shadow: 0 0 0 2px
+      ${(props) => (!props.data && !props.search ? color.error : color.accent)};
   }
 `;
 

@@ -17,7 +17,7 @@ const Sidebar = () => {
   const location = useLocation();
 
   return (
-    <Wrapper>
+    <>
       <Header>
         <h1>My dictionary</h1>
       </Header>
@@ -39,19 +39,9 @@ const Sidebar = () => {
           })}
         </ul>
       </Navigation>
-    </Wrapper>
+    </>
   );
 };
-
-// Create a styled div element
-const Wrapper = styled.div`
-  background-color: ${color.secondaryBackground};
-  border-right: solid 1px ${color.tertiaryText};
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-`;
 
 const Header = styled.div`
   display: flex;
@@ -85,13 +75,14 @@ const Navigation = styled.nav`
   padding-left: 2rem;
   padding-right: 2rem;
 
-  a span {
-    float: right;
-    color: ${color.primaryText};
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 
-  a.active span {
-    color: inherit;
+  li {
+    margin: 1rem 0;
   }
 
   .active i {
@@ -101,15 +92,10 @@ const Navigation = styled.nav`
   a {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-
-    white-space: pre;
     padding: 0.5rem;
     border-radius: 8px;
     color: inherit;
     text-decoration: none;
-    gap: 1rem;
   }
 
   a:hover {
@@ -119,16 +105,6 @@ const Navigation = styled.nav`
   a.active {
     background: ${color.accent};
     color: white;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  li {
-    margin: 1rem 0;
   }
 `;
 

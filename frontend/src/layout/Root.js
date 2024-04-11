@@ -3,7 +3,8 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import SidebarHover from './SidebarHover';
-import CollaseButton from './CollaseButton';
+import CollapseButton from './CollapseButton';
+import { color } from 'constant/Color';
 
 const Root = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -17,7 +18,7 @@ const Root = () => {
         <SidebarHover setIsCollapsed={setIsCollapsed} />
       </SidebarHoverWrapper>
       <CollaseWrapper>
-        <CollaseButton setIsCollapsed={setIsCollapsed} />
+        <CollapseButton setIsCollapsed={setIsCollapsed} />
       </CollaseWrapper>
       <PageWrapper>
         <Outlet />
@@ -29,6 +30,10 @@ const Root = () => {
 // Create a styled div element
 const SidebarWrapper = styled.div`
   width: 20rem;
+  background-color: ${color.secondaryBackground};
+  border-right: solid 1px ${color.tertiaryText};
+  height: 100vh;
+  overflow-y: auto;
 
   // Use media query to hide sidebar on screens smaller than 992px
   @media (max-width: 992px) {
@@ -57,7 +62,7 @@ const CollaseWrapper = styled.div`
 const PageWrapper = styled.div`
   flex: 1;
   padding: 4rem;
-  max-height: 100vh;
+  height: 100vh;
   overflow-y: auto;
   width: calc(100vw - 20rem);
 

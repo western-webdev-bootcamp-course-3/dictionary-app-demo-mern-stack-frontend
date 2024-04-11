@@ -2,8 +2,11 @@ import Phonetics from './Phonetics';
 import Meaning from './Meaning';
 import Source from './Source';
 
-const DefinitionArea = ({ data }) => {
-  if (!data) return null;
+const DefinitionArea = ({ data, searching }) => {
+  if (!data && searching)
+    return <div style={{ marginTop: '2em' }}>Searching...</div>;
+
+  if (!data) return <div style={{ marginTop: '2em' }}>Word not found</div>;
 
   return (
     <div style={{ marginTop: '2em' }}>
@@ -17,6 +20,5 @@ const DefinitionArea = ({ data }) => {
     </div>
   );
 };
-
 
 export default DefinitionArea;
