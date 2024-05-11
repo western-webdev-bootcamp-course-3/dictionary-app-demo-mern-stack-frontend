@@ -11,6 +11,8 @@ const WordContext = createContext({
   words: [], // represent all words in the database
 });
 
+const REACT_APP_API_URL = process.env.REACT_APP_URL;
+
 const WordProvider = ({ children }) => {
   const [words, setWords] = useState([]); // [{ id: 'hello', word: 'hello' }]
 
@@ -21,7 +23,7 @@ const WordProvider = ({ children }) => {
     // purpose 2: set the words to the state
     const fetchWords = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/words');
+        const response = await axios.get(`${REACT_APP_API_URL}/words`);
         const data = response.data;
         setWords(data);
       } catch (error) {
@@ -37,7 +39,7 @@ const WordProvider = ({ children }) => {
   // purpose 2: update the words state
   // parameter: word - a string (e.g. 'hello')
   const addWord = async (word) => {
-    const response = await axios.post('http://localhost:8000/words', {
+    const response = await axios.post(`${REACT_APP_API_URL}/words`, {
       _id: word,
       word: word,
     });
@@ -59,10 +61,10 @@ const WordProvider = ({ children }) => {
     // );
 
     // make a delete request to delete the old word
-    await axios.delete(`http://localhost:8000/words/${oldWord}`);
+    await axios.delete(`${REACT_APP_API_URL}/words/${oldWord}`);
 
     // make a post request to add the new word
-    const response = await axios.post('http://localhost:8000/words', {
+    const response = await axios.post(`${REACT_APP_API_URL}/words`, {
       _id: newWord,
       word: newWord,
     });
@@ -82,7 +84,7 @@ const WordProvider = ({ children }) => {
   // purpose 2: update the words state
   // parameter: word - a string (e.g. 'hello')
   const deleteWord = async (word) => {
-    await axios.delete(`http://localhost:8000/words/${word}`); // the word is used an id here
+    await axios.delete(`${REACT_APP_API_URL}/words/${word}`); // the word is used an id here
     const updatedWords = words.filter((w) => w._id !== word);
     setWords(updatedWords);
   };
